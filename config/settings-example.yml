@@ -1,0 +1,5 @@
+---
+  :url: 'ldap://myldapserver.example.com'
+  :base: 'ou=people,dc=exmaple,dc=com'
+  :username: 'cn=binduser,dc=example,dc=com'
+  :password: 'supersecretpassword'

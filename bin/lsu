@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+$:.unshift( File.join( File.dirname( __FILE__ ), %w[.. lib] ) )
+
+require 'loader'
+
+LdapShellUtils::CliApplication.run( 
+  Choice.choices[:config],
+  Choice.choices[:filter],
+  Choice.choices[:attributes]
+)

@@ -1,0 +1,22 @@
+= LDAP Shell utils
+ 
+ A little wrapper over ldapsearch command
+
+== Installation
+
+  gem install ldap-shell-utils
+
+
+== Examples
+  
+  lsu --config myldapconfigfile.yml --filter uid=testuser --attributes mailAlternateAddress
+  
+
+== To Do
+
+Testing all this stuff
+
+
+== License
+
+Copyright © 2007-2010 Javier Juarez, released under the MIT license.

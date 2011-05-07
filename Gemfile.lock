@@ -1,0 +1,14 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    choice (0.1.4)
+    config_context (0.3.5)
+    net-ldap (0.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  choice
+  config_context
+  net-ldap
