@@ -1,6 +1,7 @@
 = LDAP Shell utils
  
- A little wrapper over ldapsearch command
+ A little wrapper over ldapsearch command a piece for working with shell wrappers
+
 
 == Installation
 
@@ -9,12 +10,24 @@
 
 == Examples
   
-  lsu --config myldapconfigfile.yml --filter uid=testuser --attributes mailAlternateAddress
-  
+  * lsu --config myldapconfigfile.yml --filter uid=testuser --attributes mailAlternateAddress
+  * lsu --config myldapconfigfile.yml --filter '(&(ojectClass=VirtualMailAccount)(uid=testuser)(mailAlternateAddress=*@example.com))'
+ 
+  * How to write a simple shell wrapper that can be work with base64 dn for example
+
+    #
+    # Find the Distinguished Name for an UID
+    #
+    __ldap_find_by_uid() {
+     
+      [ -s ${LDAP_CONFIG} ] && [ -n "${1}" ] && lsu --config ${LDAP_CONFIG} --filter uid=${1} dn
+    } 
+
 
 == To Do
 
-Testing all this stuff
+ * Testing all this stuff
+ * Improve flexibility... for example changing the ldap base with a simple command line option
 
 
 == License
