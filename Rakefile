@@ -1,10 +1,19 @@
-$:.unshift( File.join( File.dirname( __FILE__ ), 'lib' ) )
+require 'rubygems'
+require 'bundler'
 
 begin
-  require 'version'
+  Bundler.setup( :default, :development )
+rescue Bundler::BundlerError => e
+  fail( "Run `bundle install` to install missing gems (#{e.message})" )
+end
+
+
+begin
+  require File.join( File.dirname( __FILE__ ), %w[lib version.rb] )
 rescue LoadError => le
   fail( le.message )
 end
+
 
 desc "Clean all temporary stuff"
 task :clean do
@@ -18,15 +27,12 @@ task :clean do
   end
 end
 
+
 desc "Build the gem"
 task :build =>[:clean] do
   
-  begin
-    require 'jeweler'
-  rescue LoadError => e
-    fail( "Jeweler not available. Install it with: gem install jeweler" )
-  end
-
+  require 'jeweler'
+  
   Jeweler::Tasks.new do |gemspec|
 
     gemspec.name              = Version::NAME
@@ -41,20 +47,46 @@ task :build =>[:clean] do
     gemspec.files             = Dir[ 'lib/**/*.rb' ] + Dir[ 'test/**/*.rb' ]
     gemspec.executables       = ['lsu']
 
-    gemspec.add_dependency( 'net-ldap' )
-    gemspec.add_dependency( 'choice' )
-    gemspec.add_dependency( 'config_context' )
+    gemspec.add_runtime_dependency( 'net-ldap' )
+    gemspec.add_runtime_dependency( 'choice' )
+    gemspec.add_runtime_dependency( 'config_context' )
+  end
+  
+  Jeweler::RubygemsDotOrgTasks.new
+end
+
+
+desc "Testing..."
+task :test do
+  
+  require 'rake/testtask'
+  require 'rake/runtest'
+  
+  Rake::TestTask.new(:test) do |test|
+  
+    test.libs << 'lib' << 'test'
+    test.pattern = 'test/**/test_*.rb'
+    test.verbose = false
   end
 end
 
-desc "Testing..."
-task :test =>[:build] do
+
+desc "Test covertura"
+task :rcov do
+
+  require 'rcov/rcovtask'
+
+  INCLUDE_DIRECTORIES = "lib:test"
   
-  require 'rake/runtest'
-  
-  Rake.run_tests 'test/unit/test_*.rb'
+  def run_coverage( files )
+
+    fail( "No files were specified for testing" ) if files.length == 0
+    sh "rcov --include #{INCLUDE_DIRECTORIES} --exclude gems/*,rubygems/* --sort coverage --aggregate coverage.data #{files.join( ' ' )}"
+  end
+
+  run_coverage Dir["test/**/test_*.rb"]
 end
+
 
 desc "Default task"
 task :default=>[:build]
-

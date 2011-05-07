@@ -3,12 +3,24 @@ GEM
   specs:
     choice (0.1.4)
     config_context (0.3.5)
+    git (1.2.5)
+    jeweler (1.5.2)
+      bundler (~> 1.0.0)
+      git (>= 1.2.5)
+      rake
     net-ldap (0.2.2)
+    rake (0.8.7)
+    rcov (0.9.9)
+    shoulda (2.11.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 1.0.0)
   choice
   config_context
+  jeweler (~> 1.5.1)
   net-ldap
+  rcov
+  shoulda
