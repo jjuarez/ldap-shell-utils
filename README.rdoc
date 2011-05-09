@@ -10,8 +10,8 @@
 
 == Examples
   
-  * lsu --config myldapconfigfile.yml --filter uid=testuser --attributes mailAlternateAddress
-  * lsu --config myldapconfigfile.yml --filter '(&(ojectClass=VirtualMailAccount)(uid=testuser)(mailAlternateAddress=*@example.com))'
+  * lsu --config myldapconfigfile.yml --audit --filter uid=testuser --attributes mail,givenName
+  * lsu --config myldapconfigfile.yml --filter '(&(uid=testuser)(mail=*@example.com))'
  
   * How to write a simple shell wrapper that can be work with base64 dn for example
 
@@ -20,7 +20,7 @@
     #
     __ldap_find_by_uid() {
      
-      [ -s ${LDAP_CONFIG} ] && [ -n "${1}" ] && lsu --config ${LDAP_CONFIG} --filter uid=${1} dn
+      [ -s ${LDAP_CONFIG} ] && [ -n "${1}" ] && lsu --config ${LDAP_CONFIG} --filter "(uid=${1})" --attributes dn
     } 
 
 
