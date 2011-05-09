@@ -6,18 +6,17 @@ module LdapShellUtils
   module CliApplication
     extend self
     
-    def run( config, filter, attributes )
+    def print_entry( entry )
 
-      ConfigContext.load( File.expand_path( config ) )
-      results = LdapConnection.new( ConfigContext.url, ConfigContext.all ).search( filter, attributes )
-      
-      if( results )
-        results.each do |entry|
-      
-          puts "dn: #{entry.dn}"
-          entry.each { |a,v| puts " - #{a}: #{v.length == 1 ? v[0]:v.inspect}" unless a == :dn }
-        end
-      end      
+      puts "dn: #{entry.dn}"
+      entry.each { |a,v| puts "#{a}: #{(v.size == 1) ? v[0]:v.inspect}" unless a == :dn }
+    end
+    
+    def run( options )
+
+      ConfigContext.load( File.expand_path( options[:config] ) )
+      results = LdapConnection.new( ConfigContext.url, ConfigContext.all ).search( options[:filter], options[:attributes], options[:audit] )
+      results.each { |e| print_entry( e ) } if results
     rescue Exception => e
       $stderr.puts( e.message )
     end

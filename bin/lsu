@@ -1,11 +1,36 @@
 #!/usr/bin/env ruby
 
+
 $:.unshift( File.join( File.dirname( __FILE__ ), %w[.. lib] ) )
 
-require 'loader'
 
-LdapShellUtils::CliApplication.run( 
-  Choice.choices[:config],
-  Choice.choices[:filter],
-  Choice.choices[:attributes]
-)
+require 'rubygems'
+require 'slop'
+require 'ldap-shell-utils'
+
+
+def validate_options( options )
+
+  options[:config] && options[:filter]
+end
+
+
+slop = Slop.new( :strict => true, :help=> true ) do
+  
+  banner "Usage:\n\t#{$0} [options]\n\nOptions:"
+  
+  on :a, :audit,  'Audit result entries'
+  on :c, :config, 'The configuration file', :optional => false
+  on :f, :filter, 'Query', :optional => false
+  on :attributes, 'Entry attribute list', :optional => true, :as => Array, :delimiter => ','
+end
+
+
+begin
+  slop.parse( )
+  options = slop.to_hash( true )
+  LdapShellUtils::CliApplication.run( options ) if validate_options( options )
+rescue Slop::InvalidOptionError => e
+  $stderr.puts( e.message )
+  exit 
+end

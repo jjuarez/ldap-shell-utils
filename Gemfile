@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'choice'
+gem 'slop'
 gem 'net-ldap'
 gem 'config_context'
 

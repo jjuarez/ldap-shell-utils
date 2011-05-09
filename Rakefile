@@ -48,7 +48,7 @@ task :build =>[:clean] do
     gemspec.executables       = ['lsu']
 
     gemspec.add_runtime_dependency( 'net-ldap' )
-    gemspec.add_runtime_dependency( 'choice' )
+    gemspec.add_runtime_dependency( 'slop' )
     gemspec.add_runtime_dependency( 'config_context' )
   end
   
