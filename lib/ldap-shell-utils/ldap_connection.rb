@@ -29,8 +29,7 @@ module LdapShellUtils
       }
       
       @configuration[:encryption] = { :method => :simple_tls } if( @uri.scheme.to_sym == :ldaps )
-
-      @connection = Net::LDAP.new( @configuration )
+      @connection                 = Net::LDAP.new( @configuration )
       
       self
     rescue Exception => e

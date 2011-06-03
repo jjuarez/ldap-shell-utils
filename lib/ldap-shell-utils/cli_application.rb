@@ -14,8 +14,9 @@ module LdapShellUtils
     
     def run( options )
 
-      ConfigContext.load( File.expand_path( options[:config] ) )
-      results = LdapConnection.new( ConfigContext.url, ConfigContext.all ).search( options[:filter], options[:attributes], options[:audit] )
+      ConfigContext.configure( File.expand_path( options[:config] ) )
+
+      results = LdapConnection.new( ConfigContext.url, ConfigContext.to_hash ).search( options[:filter], options[:attributes], options[:audit] )
       results.each { |e| print_entry( e ) } if results
     rescue Exception => e
       $stderr.puts( e.message )

@@ -9,7 +9,7 @@ end
 
 
 begin
-  require File.join( File.dirname( __FILE__ ), %w[lib version.rb] )
+  require File.join( File.dirname( __FILE__ ), %w[lib ldap-shell-utils version.rb] )
 rescue LoadError => le
   fail( le.message )
 end
@@ -35,14 +35,14 @@ task :build =>[:clean] do
   
   Jeweler::Tasks.new do |gemspec|
 
-    gemspec.name              = Version::NAME
-    gemspec.version           = Version::VERSION
-    gemspec.rubyforge_project = "http://github.com/jjuarez/#{Version::NAME}"
+    gemspec.name              = LdapShellUtils::Version::NAME
+    gemspec.version           = LdapShellUtils::Version::VERSION
+    gemspec.rubyforge_project = "http://github.com/jjuarez/#{LdapShellUtils::Version::NAME}"
     gemspec.license           = 'MIT License'
     gemspec.summary           = 'A minimal ldapsearch wrapper'
     gemspec.description       = 'This is a simple wrapper over ldapsearch util avoiding base64 dn and others gotchas'
     gemspec.email             = 'javier.juarez@gmail.com'
-    gemspec.homepage          = "http://github.com/jjuarez/#{Version::NAME}"
+    gemspec.homepage          = "http://github.com/jjuarez/#{LdapShellUtils::Version::NAME}"
     gemspec.authors           = ['Javier Juarez']
     gemspec.files             = Dir[ 'lib/**/*.rb' ] + Dir[ 'test/**/*.rb' ]
     gemspec.executables       = ['lsu']
@@ -51,8 +51,6 @@ task :build =>[:clean] do
     gemspec.add_runtime_dependency( 'slop' )
     gemspec.add_runtime_dependency( 'config_context' )
   end
-  
-  Jeweler::RubygemsDotOrgTasks.new
 end
 
 
