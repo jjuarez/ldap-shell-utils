@@ -8,7 +8,7 @@ module LdapShellUtils
     
     def print_entry( entry )
 
-      puts "dn: #{entry.dn}"
+      puts "#{entry.dn}"
       entry.each { |a,v| puts "#{a}: #{(v.size == 1) ? v[0]:v.inspect}" unless a == :dn }
     end
     
