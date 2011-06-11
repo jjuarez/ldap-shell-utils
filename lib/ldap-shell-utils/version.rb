@@ -2,8 +2,8 @@ module LdapShellUtils
   module Version
     INFO = {
       :major =>0,
-      :minor =>0,
-      :patch =>4
+      :minor =>1,
+      :patch =>0
     }
 
     NAME    = 'ldap-shell-utils'
